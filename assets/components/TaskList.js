@@ -23,8 +23,8 @@ export class TaskList extends HTMLElement {
     }
     render(){
         this.root.innerHTML = `
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <link rel="stylesheet" href="./assets/css/taskListStyle.css">  
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
             <input class = 'state' type ='checkBox' >    
             <span class = 'title'>${this.todo.title}</span>
             <span class = 'id'>${this.todo.id}</span> 
