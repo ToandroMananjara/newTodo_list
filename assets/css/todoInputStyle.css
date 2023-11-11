@@ -12,6 +12,9 @@
     border-radius: 15px;
     padding: 0 10px;
 }
+.label{
+    width: 100%;
+}
 button{
     border-radius: 15px;
     cursor: pointer;

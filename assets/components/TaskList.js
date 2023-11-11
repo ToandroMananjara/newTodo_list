@@ -11,7 +11,6 @@ export class TaskList extends HTMLElement {
         this.render()
         this.root.querySelector('.delete').addEventListener('click',()=>{
             this.removeTask(this.todo)
-            this.taskFinish()
         })
         this.root.querySelector('.edit-span').addEventListener('click',() =>
             this.editTask(todo)
@@ -65,7 +64,6 @@ export class TaskList extends HTMLElement {
     }
     stateTask(checkbox, todo){
         if (checkbox.checked) {
-
             todo.state = true
             console.log(todo);
             console.log(todos);
