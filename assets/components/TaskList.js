@@ -12,7 +12,7 @@ export class TaskList extends HTMLElement {
         this.root.querySelector('.delete').addEventListener('click',()=>{
             this.removeTask(this.todo)
         })
-        this.root.querySelector('.edit-span').addEventListener('click',() =>
+        this.root.querySelector('#edit-task').addEventListener('click',() =>
             this.editTask(todo)
         )
         this.root.querySelector('.state').addEventListener('click',() =>
@@ -27,10 +27,9 @@ export class TaskList extends HTMLElement {
             <input class = 'state' type ='checkBox' >    
             <span class = 'title'>${this.todo.title}</span>
             <span class = 'id'>${this.todo.id}</span> 
-            <span class = 'edit-span'> <i class="fa-solid fa-pencil edit" ></i> </span>
+            <span class = 'edit-span'> <i class="fa-solid fa-pencil edit" id = 'edit-task'></i> </span>
             <span class = 'delete'> <i class="fa-solid fa-trash"></i> </span>
       `
-      this.root.querySelector('.edit-span').addEventListener('click', ()=> this.dispatchEvent(new CustomEvent ('editTask')))
     }
    
     removeTask(todo){
