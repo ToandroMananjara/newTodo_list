@@ -10,15 +10,18 @@ document.getElementById('task-finished').addEventListener('click', () => {
     console.log(todos);
     filters.forEach(todo => {
         taskList.append(new TaskList(todo));
+        document.querySelectorAll('.state').forEach(chekbox => {
+            chekbox.checked = true  
+        })
     })
-    
 })
 document.getElementById('tous').addEventListener('click', () => {
     let taskList = document.querySelector('#task-list')
     taskList.innerHTML = ''
     console.log(todos);
-
     todos.forEach(todo => {
-        taskList.append(new TaskList(todo));
+        if(todo.state === false){
+            taskList.append(new TaskList(todo));
+        }
     })
 })    

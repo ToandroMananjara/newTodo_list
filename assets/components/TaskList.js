@@ -6,22 +6,21 @@ import { EditTask } from "./EditTask.js";
 export class TaskList extends HTMLElement {
     constructor(todo){
         super()
-        this.root = this.attachShadow({ mode: 'open' })
+        // this.root = this.attachShadow({ mode: 'open' })
         this.todo = todo
         this.render()
-        this.root.querySelector('.delete').addEventListener('click',()=>{
+        this.querySelector('.delete').addEventListener('click',()=>{
             this.removeTask(this.todo)
         })
-        this.root.querySelector('#edit-task').addEventListener('click',() =>
+        this.querySelector('#edit-task').addEventListener('click',() =>
             this.editTask(todo)
         )
-        this.root.querySelector('.state').addEventListener('click',() =>
-            this.stateTask(this.root.querySelector('.state'), todo)
+        this.querySelector('.state').addEventListener('click',() =>
+            this.stateTask(this.querySelector('.state'), todo)
         )
-        
     }
     render(){
-        this.root.innerHTML = `
+        this.innerHTML = `
         <link rel="stylesheet" href="./assets/css/taskListStyle.css">  
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
             <input class = 'state' type ='checkBox' >    
@@ -34,15 +33,8 @@ export class TaskList extends HTMLElement {
    
     removeTask(todo){
         this.remove()
-        let indexRemove = todos.findIndex((arr) => {
-            return arr.id === todo.id
-        })
-        todos.splice(indexRemove, 1)
-        let indexRemoveFilter = filters.findIndex((arr) => {
-            return arr.id === todo.id
-        })
-        filters.splice(indexRemoveFilter, 1)
-        console.log(todos);      
+        this.deleteTodoOfArray(todos, todo)    
+        this.deleteTodoOfArray(filters, todo)
     }
     editTask(todo){
         console.log(todo.title);
@@ -54,18 +46,20 @@ export class TaskList extends HTMLElement {
             document.querySelector('edit-task').querySelector('#edit').addEventListener('click',()=>{
                 console.log(document.querySelector('edit-task').querySelector('#input-to-do').value);
                 todo.title = document.querySelector('edit-task').querySelector('#input-to-do').value
-                this.root.querySelector('.title').innerHTML = document.querySelector('edit-task').querySelector('#input-to-do').value;
+                this.querySelector('.title').innerHTML = document.querySelector('edit-task').querySelector('#input-to-do').value;
                 document.querySelector('edit-task').remove()
                 document.querySelector('.input').append(new AddTask)
             })    
-        }
-        
+        }  
     }
     stateTask(checkbox, todo){
         if (checkbox.checked) {
             todo.state = true
-            console.log(todo);
-            console.log(todos);
+            // console.log(todo);
+            // console.log(todos);
+            if (todo.state === true) {
+                this.remove()
+            }
             filters = todos.filter(task =>{
                 return task.state ===  true
             })
@@ -75,8 +69,21 @@ export class TaskList extends HTMLElement {
             todo.state = false
             console.log(todo);
             console.log(todos);
+            console.log(filters);
+            filters.forEach(todo => {
+                if (todo.state === false) {
+                    this.remove()
+                    this.deleteTodoOfArray(filters, todo)
+                }
+            })
         }
     }
-
+    deleteTodoOfArray(array, todo){
+        let indexRemove = array.findIndex((arr) => {
+            return arr.id === todo.id
+        })
+        array.splice(indexRemove, 1)
+        // console.log(array);
+    }
 }
 customElements.define('task-list', TaskList)
