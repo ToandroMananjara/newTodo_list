@@ -1,11 +1,29 @@
 import { AddTask } from "../components/AddTask.js";
 import { EditTask } from "../components/EditTask.js";
 import { TaskList, filters } from "../components/TaskList.js";
-const todos = []
-export {todos}
+import { localStorageFunction, updateCheckbox, taskList } from "./function.js";
+export {todos, isTous}
+let todos = []
+let isTous = false
 
+todos = localStorageFunction(todos)
+document.getElementById('tous').addEventListener('click', () => {
+    isTous = false
+    updateCheckbox(todos)
+    console.log(todos);
+}) 
+document.getElementById('a-faire').addEventListener('click', () => {
+    isTous = true
+    taskList.innerHTML = ''
+    console.log(todos);
+    todos.forEach(todo => {
+        if(todo.state === false){
+            taskList.append(new TaskList(todo));
+        }
+    })
+}) 
 document.getElementById('task-finished').addEventListener('click', () => {
-    let taskList = document.querySelector('#task-list')
+    isTous = true
     taskList.innerHTML = ''
     console.log(todos);
     filters.forEach(todo => {
@@ -15,13 +33,4 @@ document.getElementById('task-finished').addEventListener('click', () => {
         })
     })
 })
-document.getElementById('tous').addEventListener('click', () => {
-    let taskList = document.querySelector('#task-list')
-    taskList.innerHTML = ''
-    console.log(todos);
-    todos.forEach(todo => {
-        if(todo.state === false){
-            taskList.append(new TaskList(todo));
-        }
-    })
-})    
+   

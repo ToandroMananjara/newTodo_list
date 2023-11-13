@@ -32,6 +32,7 @@ export class AddTask extends HTMLElement {
             }
             ul.append(new TaskList(todo))
             todos.push(todo)
+            localStorage.setItem('todos', JSON.stringify(todos))
             newTaskInput.value = ''
         }
     

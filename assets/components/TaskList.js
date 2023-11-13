@@ -1,6 +1,6 @@
 let filters = []
 export { filters }
-import { todos } from "../main/index.js";
+import { todos, isTous } from "../main/index.js";
 import { AddTask } from "./AddTask.js";
 import { EditTask } from "./EditTask.js";
 export class TaskList extends HTMLElement {
@@ -13,17 +13,17 @@ export class TaskList extends HTMLElement {
             this.removeTask(this.todo)
         })
         this.querySelector('#edit-task').addEventListener('click',() =>
-            this.editTask(todo)
+            this.editTask(this.todo)
         )
         this.querySelector('.state').addEventListener('click',() =>
-            this.stateTask(this.querySelector('.state'), todo)
+            this.stateTask(this.querySelector('.state'), this.todo)
         )
     }
     render(){
         this.innerHTML = `
         <link rel="stylesheet" href="./assets/css/taskListStyle.css">  
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-            <input class = 'state' type ='checkBox' >    
+            <input class = 'state' data-task-id="${this.todo.id}" type ='checkBox' >    
             <span class = 'title'>${this.todo.title}</span>
             <span class = 'id'>${this.todo.id}</span> 
             <span class = 'edit-span'> <i class="fa-solid fa-pencil edit" id = 'edit-task'></i> </span>
@@ -35,6 +35,7 @@ export class TaskList extends HTMLElement {
         this.remove()
         this.deleteTodoOfArray(todos, todo)    
         this.deleteTodoOfArray(filters, todo)
+        this.updateStorage()
     }
     editTask(todo){
         console.log(todo.title);
@@ -49,6 +50,7 @@ export class TaskList extends HTMLElement {
                 this.querySelector('.title').innerHTML = document.querySelector('edit-task').querySelector('#input-to-do').value;
                 document.querySelector('edit-task').remove()
                 document.querySelector('.input').append(new AddTask)
+                this.updateStorage()
             })    
         }  
     }
@@ -57,13 +59,14 @@ export class TaskList extends HTMLElement {
             todo.state = true
             // console.log(todo);
             // console.log(todos);
-            if (todo.state === true) {
+            if (todo.state === true && isTous === true) {
                 this.remove()
             }
             filters = todos.filter(task =>{
                 return task.state ===  true
             })
             console.log(filters);
+            this.updateStorage()
         }
         else{
             todo.state = false
@@ -71,11 +74,14 @@ export class TaskList extends HTMLElement {
             console.log(todos);
             console.log(filters);
             filters.forEach(todo => {
-                if (todo.state === false) {
+                if (todo.state === false && isTous === true) {
                     this.remove()
+                }
+                if (todo.state === false ) {
                     this.deleteTodoOfArray(filters, todo)
                 }
             })
+            this.updateStorage()
         }
     }
     deleteTodoOfArray(array, todo){
@@ -84,6 +90,9 @@ export class TaskList extends HTMLElement {
         })
         array.splice(indexRemove, 1)
         // console.log(array);
+    }
+    updateStorage(){
+        localStorage.setItem('todos', JSON.stringify(todos))
     }
 }
 customElements.define('task-list', TaskList)
