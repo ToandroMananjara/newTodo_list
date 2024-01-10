@@ -21,7 +21,62 @@ export class TaskList extends HTMLElement {
     }
     render(){
         this.innerHTML = `
-        <link rel="stylesheet" href="./assets/css/taskListStyle.css">  
+        <style>
+            /* @font-face {
+                font-family: inter;
+                src: url(../fonts/static/Inter-Regular.ttf);
+            } */
+
+            .todo-item{
+                display: flex;
+                justify-content: space-between;
+                margin: 10px 0;
+            }
+
+
+            .check-box{
+                margin: 0;
+            }
+            .state-ok{
+                margin: 0 5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 30%;
+                text-align: center;
+                
+            }
+
+            .edit-span{
+                width: 30%;
+                display: flex;
+                justify-content: space-around;
+                color: green;
+                margin: 0;
+            }
+            .delete{
+                color:red;
+            }
+            .id{
+                width: 50px;
+                display: flex;
+                justify-content: center;
+            }
+            .title{
+                width: 55%;
+                margin: 0;
+                text-align: left;
+                padding-left: 10px;
+                
+            }
+            .status{
+                text-align: center; 
+                margin: 0;
+                display: flex;
+                justify-content: center;
+            }
+
+        </style>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
             <input class = 'state' data-task-id="${this.todo.id}" type ='checkBox' >    
             <span class = 'title'>${this.todo.title}</span>
