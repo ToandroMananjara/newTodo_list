@@ -1,3 +1,4 @@
-# newTodo_list  
-## Projet basé sur le web Components et LocalStorage
-* lien : https://todo-by-toandro.netlify.app/
+# Todo_list  
+* Projet basé sur le web Components et localStorage
+* lien du site https://todo-by-toandro.netlify.app/
+
