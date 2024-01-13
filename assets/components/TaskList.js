@@ -57,6 +57,12 @@ export class TaskList extends HTMLElement {
             .delete{
                 color:red;
             }
+            #edit-task:hover{
+                cursor: pointer;
+            }
+            .delete:hover{
+                cursor: pointer;
+            }
             .id{
                 width: 50px;
                 display: flex;
@@ -82,7 +88,7 @@ export class TaskList extends HTMLElement {
             <span class = 'title'>${this.todo.title}</span>
             <span class = 'id'>${this.todo.id}</span> 
             <span class = 'edit-span'> <i class="fa-solid fa-pencil edit" id = 'edit-task'></i> </span>
-            <span class = 'delete'> <i class="fa-solid fa-trash"></i> </span>
+            <span class = 'delete'> <i class="fa-solid fa-trash" ></i> </span>
       `
     }
    
