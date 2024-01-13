@@ -33,4 +33,15 @@ document.getElementById('task-finished').addEventListener('click', () => {
         })
     })
 })
-                                                                                        
+let links = document.querySelectorAll('.task-menu')
+links.forEach((link ,index)=>{
+    link.addEventListener('click', (e)=> {
+        links.forEach(otherLink => {
+            otherLink.style.background = '#F6F4F3'; // Réinitialiser à la couleur par défaut (ou utilisez une autre valeur)
+            otherLink.style.color = '#333333' 
+        });
+
+        links[index].style.background = '#007BFF'
+        links[index].style.color = ' #f5f5f5'  
+    })
+})                                                                                        
