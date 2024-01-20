@@ -60,7 +60,7 @@ const renderAdd = `
 `
 import { todos } from "../main/index.js";
 import { TaskList, filters } from "../components/TaskList.js";
-import { tousCount } from "../main/function.js";
+import { tousCount,aFaireCount } from "../main/function.js";
 export class AddTask extends HTMLElement {
     constructor(){
         super()
@@ -101,6 +101,7 @@ export class AddTask extends HTMLElement {
             newTaskInput.value = ''
         }
         tousCount(todos)
+        aFaireCount(todos)
     }
   
 }
