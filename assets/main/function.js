@@ -1,5 +1,5 @@
 import { TaskList, filters } from "../components/TaskList.js";
-export { localStorageFunction, updateCheckbox, taskList}
+export { localStorageFunction, updateCheckbox, taskList, tousCount, aFaireCount, taskFinished}
 let taskList = document.querySelector('#task-list')  
 const updateCheckbox = (todos)=>{
     taskList.innerHTML = ''
@@ -31,4 +31,20 @@ const localStorageFunction = (todos) => {
         })
     }
     return todos
+}
+
+const tousCount = (todos)=>{
+    let tousCount = document.querySelector('.tous-count')
+        tousCount.innerHTML = todos.length
+}
+const aFaireCount = (todos)=>{
+    let aFaireCount = document.querySelector('.a-faire-count')
+    aFaireCount.innerHTML = todos.filter(todo=>{
+        return todo.state === false
+    }).length
+}
+const taskFinished = ()=>{
+    let taskFinished = document.querySelector('.task-finished-count')
+    taskFinished.innerHTML = filters.length
+    
 }

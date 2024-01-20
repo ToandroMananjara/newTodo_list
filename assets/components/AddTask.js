@@ -59,12 +59,22 @@ const renderAdd = `
     </div>
 `
 import { todos } from "../main/index.js";
-import { TaskList } from "../components/TaskList.js";
+import { TaskList, filters } from "../components/TaskList.js";
+import { tousCount } from "../main/function.js";
 export class AddTask extends HTMLElement {
     constructor(){
         super()
         this.renderAdd()
         this.querySelector('#add').addEventListener('click', () => this.addTask());
+        this.querySelector('#input-to-do').addEventListener('keydown', (event)=> {
+            // Vérifiez si la touche pressée est "Enter" (code 13)
+            if (event.key === 'Enter') {
+                // Ajoutez votre logique ici pour la touche "Enter"
+                this.addTask()
+                console.log(todos);
+                console.log(filters);
+            }
+        });
     }
     renderAdd(){
         this.innerHTML = renderAdd
@@ -76,16 +86,21 @@ export class AddTask extends HTMLElement {
         const taskInput = newTaskInput.value.trim()
         if (taskInput !== '' ) {
             let todo = {
-                id : `${(new Date).getHours()}:${(new Date).getMinutes()}:${(new Date).getSeconds()}`,
+                id : `${(new Date).getHours()}-${(new Date).getMinutes()}-${(new Date).getSeconds()}`,
                 title : `${this.title}`,
-                state : false 
+                state : false ,
+                isMore : false,  
+                note : '',
+                dateEcheance : '',
+                priorité : 'Aucune'
             }
-            ul.append(new TaskList(todo))
-            todos.push(todo)
+            console.log(todo);
+            ul.prepend(new TaskList(todo))
+            todos.unshift(todo)
             localStorage.setItem('todos', JSON.stringify(todos))
             newTaskInput.value = ''
         }
-    
+        tousCount(todos)
     }
   
 }

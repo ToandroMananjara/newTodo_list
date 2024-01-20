@@ -1,5 +1,6 @@
 let filters = []
 export { filters }
+import { tousCount, aFaireCount, taskFinished } from "../main/function.js";
 import { todos, isTous } from "../main/index.js";
 import { AddTask } from "./AddTask.js";
 import { EditTask } from "./EditTask.js";
@@ -8,6 +9,7 @@ export class TaskList extends HTMLElement {
         super()
         // this.root = this.attachShadow({ mode: 'open' })
         this.todo = todo
+        this.isMore = false
         this.render()
         this.querySelector('.delete').addEventListener('click',()=>{
             this.removeTask(this.todo)
@@ -15,9 +17,49 @@ export class TaskList extends HTMLElement {
         this.querySelector('#edit-task').addEventListener('click',() =>
             this.editTask(this.todo)
         )
-        this.querySelector('.state').addEventListener('click',() =>
+        this.querySelector('.state').addEventListener('click',() =>{
             this.stateTask(this.querySelector('.state'), this.todo)
-        )
+            aFaireCount(todos)
+            taskFinished()
+        })
+        this.querySelector('.item-container').addEventListener('click', ()=>{
+            document.querySelectorAll('.more').forEach(more =>{
+                more.style.display = 'none'
+            })
+    
+            if(this.todo.isMore === false){
+                todos.forEach((todo, index)=>{
+                    todo.isMore = false
+                })
+                this.todo.isMore = true 
+                this.querySelector('.more').style.display = 'flex'
+            }
+            else{
+                this.todo.isMore = false
+                this.querySelector('.more').style.display = 'none'
+            }        
+        })
+        this.querySelector('.state').addEventListener('click', (event)=>{
+            event.stopPropagation()
+        })
+        this.querySelector('#notes').innerHTML = this.todo.note
+        this.querySelector('#notes').addEventListener('change', ()=>{
+            this.todo.note =  this.querySelector('#notes').value
+            this.updateStorage()
+        })
+        // this.querySelector('.delete').ininnerHTML = this.todo.dateEcheance
+        this.querySelectorAll('.getDate').forEach(elt =>{
+            elt.addEventListener('click', ()=>{
+                this.todo.dateEcheance = elt.innerHTML
+                this.querySelector('.date-echeance').innerHTML = this.todo.dateEcheance
+                this.updateStorage()
+            })
+        })
+        this.querySelector('#getDate').addEventListener('change', ()=>{
+            this.todo.dateEcheance = this.querySelector('#getDate').value
+            this.querySelector('.date-echeance').innerHTML = this.todo.dateEcheance
+            this.updateStorage()
+        })
     }
     render(){
         this.innerHTML = `
@@ -27,10 +69,18 @@ export class TaskList extends HTMLElement {
                 src: url(../fonts/static/Inter-Regular.ttf);
             } */
 
-            .todo-item{
+            .item-container{
+                width: 100%;
+                position: relative;
                 display: flex;
                 justify-content: space-between;
-                margin: 10px 0;
+                cursor: pointer;
+                padding-bottom:20px; 
+                border-bottom :1px solid black; 
+            }
+            .todo-item{
+                display: flex;
+                
             }
 
 
@@ -55,7 +105,7 @@ export class TaskList extends HTMLElement {
                 margin: 0;
             }
             .delete{
-                color:red;
+
             }
             #edit-task:hover{
                 cursor: pointer;
@@ -69,7 +119,7 @@ export class TaskList extends HTMLElement {
                 justify-content: center;
             }
             .title{
-                width: 55%;
+                width: 100%;
                 margin: 0;
                 text-align: left;
                 padding-left: 10px;
@@ -81,21 +131,158 @@ export class TaskList extends HTMLElement {
                 display: flex;
                 justify-content: center;
             }
+            .more{
+                display: none;
+                justify-content: space-evenly;
+                width: 100%;
+                z-index:3; 
+                background: #fff;  
+                margin-top:10px;  
+            }
+            .note{
+                margin-right: 10px;
+            }
+            .echeance {
+                display: flex;
+                flex-direction: column;
+                position: relative;
+            }
+            .echeance .date_{
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid black;
+                width: 120px;
+                height: 30px;
+            }
+            .priorite{
+                width: 100%;
+                margin-top: 20px;
+                position: relative;
+            }
+            #priorite{
+            
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                width: 375px;
+                height: 30px;
+                border: 1px solid black;
+            }
+            .date input {
+                height: 100%;
+                border: none;
+                margin: 0;
+            }
 
+            .suppr-btn, .edit-btn{ 
+                width: 100px;
+                height: 30px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+                background: red;
+                border: 1px solid black;
+                
+            }
+            .edit-btn{
+                background: green;
+            }
+            .button{
+                display: flex;
+                gap:10px;
+                position: absolute;
+                right: 0;
+                bottom: 10px;
+                z-index: 2;
+            }
+            .echeance-item{
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+            }
+            .date-echeance{
+                width: 90px;
+                text-align:right;
+                color: black;
+                margin-right:20px; 
+            }
+            .more-icon{
+                position: absolute;
+                right: 0;
+                width: fit-content;
+            }
+            @media only screen and (max-width:1023px){
+             .more{
+                flex-direction:column;
+             }
+             .button{
+                margin-top:20px;
+                position: relative;
+                justify-content:center;
+             }
+             #priorite{
+                width: 100%;
+             }
+             textarea{
+                width: 100%;
+             }
+             .date{
+                display: inline-block;
+             }
+             .echeance-item{
+                width: 100%;
+                display: flex;
+                justify-content:start; 
+                align-items: center;
+                gap: 5px;
+            }
+            }
         </style>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-            <input class = 'state' data-task-id="${this.todo.id}" type ='checkBox' >    
-            <span class = 'title'>${this.todo.title}</span>
-            <span class = 'id'>${this.todo.id}</span> 
-            <span class = 'edit-span'> <i class="fa-solid fa-pencil edit" id = 'edit-task'></i> </span>
-            <span class = 'delete'> <i class="fa-solid fa-trash" ></i> </span>
+           <div class="item-container">
+                <input class = 'state' data-task-id="${this.todo.id}" type ='checkBox' >    
+                <span class = 'title'>${this.todo.title}</span>
+                <span class = 'date-echeance'>${this.todo.dateEcheance}</span>
+                <span class = 'more-icon'><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+           </div>
+           <div class = "more">
+                <div class="note">
+                    <label for="note">Notes</label><br>
+                    <textarea name="note" id="notes"cols="30" rows="10" placeholder="" >${this.todo.note}</textarea>    
+                </div>
+                 <div class="echeance">
+                    <div>
+                        <span>Date d'echeance</span><br>
+                        <div class = "echeance-item">
+                            <span class = "aujourdhui date_ getDate">Aujourd'hui</span>
+                            <span class="demain date_ getDate">Demain</span>
+                            <span class="date date_ "><input type="date" value="Aujourd'hui" id="getDate"></span>
+                        </div>
+                    </div>
+                
+                <div class="priorite">
+                    <span>Priorité</span><br>
+                    <span id="priorite">Choisir priorite</span>
+                </div>
+                <div class="button">
+                    <span class="edit-btn" id = 'edit-task'>Editer</span>    
+                    <span class="suppr-btn delete">Supprimer</span>
+                </div>
+            </div>
       `
     }
-   
+    
     removeTask(todo){
         this.remove()
         this.deleteTodoOfArray(todos, todo)    
         this.deleteTodoOfArray(filters, todo)
+        tousCount(todos)
+        aFaireCount(todos)
+        taskFinished()
         this.updateStorage()
     }
     editTask(todo){
@@ -113,6 +300,17 @@ export class TaskList extends HTMLElement {
                 document.querySelector('.input').append(new AddTask)
                 this.updateStorage()
             })    
+            document.querySelector('edit-task').querySelector('#input-to-do').addEventListener('keydown', (event)=> {
+                // Vérifiez si la touche pressée est "Enter" (code 13)
+                if (event.key === 'Enter') {
+                    console.log(document.querySelector('edit-task').querySelector('#input-to-do').value);
+                    todo.title = document.querySelector('edit-task').querySelector('#input-to-do').value
+                    this.querySelector('.title').innerHTML = document.querySelector('edit-task').querySelector('#input-to-do').value;
+                    document.querySelector('edit-task').remove()
+                    document.querySelector('.input').append(new AddTask)
+                    this.updateStorage()
+                }
+            });
         }  
     }
     stateTask(checkbox, todo){
@@ -155,5 +353,6 @@ export class TaskList extends HTMLElement {
     updateStorage(){
         localStorage.setItem('todos', JSON.stringify(todos))
     }
+
 }
 customElements.define('task-list', TaskList)

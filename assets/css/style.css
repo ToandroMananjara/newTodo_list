@@ -2,6 +2,9 @@
     font-family: inter;
     src: url(../fonts/static/Inter-Regular.ttf);
 } */
+.more{
+    width: 60%;
+}
 body{
     font-size: 15px;
     font-family: inter;
@@ -9,7 +12,9 @@ body{
     width: 100%;
     height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
     margin: 0;
     color: #333333 ;
 }
@@ -33,12 +38,10 @@ ul{
     margin:5px 0;
     padding-left:10px;
 }
-task-list{
-    margin: 10px;
-}
+
 
 .container{
-    width: 80%;
+    width: 90%;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -56,13 +59,16 @@ task-list{
 
 #task-list{
     width: 80%;
-    
-    flex-direction:row;
-    justify-content: center;
-    background: #fff;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #007BFF;
     box-shadow: 4px 5px 5px #dcd8d8;
     /* padding: 10px; */
     margin: 0;
+    margin-top: 5px;
+ 
 }
 
 .edit-span{
@@ -82,15 +88,25 @@ task-list{
     text-align: left;
 }
 .task span{
+    width: fit-content;
     background:#fff ;
     border:1px solid #333333 ;
-    padding: 10px;
+    padding: 10px 5px;
     cursor: pointer;
 }
 task-list{
+
+    width: 90%;
+    /* height: 30px; */
+    min-height: 30px;
     display: flex;
-    justify-content: center;
-    width: 80%;
+    flex-direction: column;
+    justify-content: center;    
+    background:#fff ;
+    padding: 10px;
+    margin: 10px 0;
+}
+.task-menu{
 }
 @media only screen and (max-width:600px){
     .container{

@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <script type="module" src="./assets/main/index.js"></script>
-    <title>Todo-List</title>
-</head>
-<body>
-    
-    <div class="container">
-        <h1>To do list <i class="fa-solid fa-pencil"></i></h1>
-        <div class="input">
-            <add-task></add-task>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <link rel="stylesheet" href="./assets/css/style.css">
+        <script type="module" src="./assets/main/index.js"></script>
+        <title>Todo-List</title>
+    </head>
+    <body>
+        
+        <div class="container">
+            <h1>To do list <i class="fa-solid fa-pencil"></i></h1>
+            <div class="input">
+                <add-task></add-task>
+            </div>
+            <div class="task">
+                <span class="task-menu" id="tous" type="button">Tous (<strong class="tous-count">00</strong>)</span>
+                <span class="task-menu"id="a-faire" type="button">A faire (<strong class="a-faire-count">00</strong>)</span>
+                <span class="task-menu"id="task-finished">Taches Finis (<strong class="task-finished-count">00</strong>)</span>
+            </div>
+            <ul id="task-list"></ul>
         </div>
-        <div class="task">
-            <span class="task-menu" id="tous" type="button">Tous</span>
-            <span class="task-menu"id="a-faire" type="button">A faire</span>
-            <span class="task-menu"id="task-finished">Taches Finis</span>
-        </div>
-        <ul id="task-list"></ul>
-    </div>
-</body>
-</html
+    </body>
+</html>
