@@ -147,6 +147,12 @@ export class TaskList extends HTMLElement {
                 flex-direction: column;
                 position: relative;
             }
+            .echeance span:hover{
+                cursor: pointer;
+            }
+            #getDate:hover{
+                cursor: pointer;
+            }
             .echeance .date_{
                 display: inline-flex;
                 justify-content: center;
