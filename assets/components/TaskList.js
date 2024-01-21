@@ -74,7 +74,7 @@ export class TaskList extends HTMLElement {
         this.querySelector('#priorite').addEventListener('click',(event)=>{
             event.stopPropagation()
             switch (this.querySelector('#priorite').value) {
-                case 'aucun':
+                case 'aucune':
                     this.querySelector('.priorite-color').style.background = '#fff'
                     break;
                 case 'basse':
@@ -413,7 +413,7 @@ export class TaskList extends HTMLElement {
     }
     prioriteColor(priorite, priorite_color){
         switch (priorite) {
-            case 'aucun':
+            case 'aucune':
                 priorite_color.style.background = '#fff'
                 break;
             case 'basse':

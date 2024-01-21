@@ -92,7 +92,7 @@ export class AddTask extends HTMLElement {
                 isMore : false,  
                 note : '',
                 dateEcheance : '',
-                priorite : 'Aucun'
+                priorite : 'aucune'
             }
             console.log(todo);
             ul.prepend(new TaskList(todo))
