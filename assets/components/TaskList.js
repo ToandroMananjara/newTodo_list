@@ -323,7 +323,7 @@ export class TaskList extends HTMLElement {
                 <div class="priorite">
                     <span>Priorité</span><br>
                     <select name="" id="priorite">
-                        <option value="aucun">Aucun</option>
+                        <option value="aucune">Aucune</option>
                         <option value="basse">Basse</option>
                         <option value="moyenne">Moyenne</option>
                         <option value="haute">Haute</option>
