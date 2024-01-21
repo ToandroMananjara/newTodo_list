@@ -59,8 +59,10 @@ export class TaskList extends HTMLElement {
         
         this.querySelectorAll('.getDate').forEach(elt =>{
             elt.addEventListener('click', ()=>{
-                this.todo.dateEcheance = elt.innerHTML
-                this.querySelector('.date-echeance').innerHTML = this.todo.dateEcheance
+                console.log(elt.innerHTML);
+                this.dateEcheance(elt, this.todo)
+                this.querySelector('.date-echeance').innerHTML = elt.innerHTML
+                console.log(todos);
                 this.updateStorage()
             })
         })
@@ -104,11 +106,11 @@ export class TaskList extends HTMLElement {
 
             .item-container{
                 width: 100%;
+                height: 100%;
                 position: relative;
                 display: flex;
                 justify-content: space-between;
                 cursor: pointer;
-                padding-bottom:20px; 
                 border-bottom :1px solid black; 
             }
             .todo-item{
@@ -354,7 +356,7 @@ export class TaskList extends HTMLElement {
             document.querySelector('edit-task').querySelector('#input-to-do').value = todo.title 
             document.querySelector('edit-task').querySelector('#input-to-do').focus()
             document.querySelector('edit-task').querySelector('#edit').addEventListener('click',()=>{
-                console.log(document.querySelector('edit-task').querySelector('#input-to-do').value);
+                // console.log(document.querySelector('edit-task').querySelector('#input-to-do').value);
                 todo.title = document.querySelector('edit-task').querySelector('#input-to-do').value
                 this.querySelector('.title').innerHTML = document.querySelector('edit-task').querySelector('#input-to-do').value;
                 document.querySelector('edit-task').remove()
@@ -362,9 +364,8 @@ export class TaskList extends HTMLElement {
                 this.updateStorage()
             })    
             document.querySelector('edit-task').querySelector('#input-to-do').addEventListener('keydown', (event)=> {
-                // Vérifiez si la touche pressée est "Enter" (code 13)
                 if (event.key === 'Enter') {
-                    console.log(document.querySelector('edit-task').querySelector('#input-to-do').value);
+                    // console.log(document.querySelector('edit-task').querySelector('#input-to-do').value);
                     todo.title = document.querySelector('edit-task').querySelector('#input-to-do').value
                     this.querySelector('.title').innerHTML = document.querySelector('edit-task').querySelector('#input-to-do').value;
                     document.querySelector('edit-task').remove()
@@ -385,14 +386,14 @@ export class TaskList extends HTMLElement {
             filters = todos.filter(task =>{
                 return task.state ===  true
             })
-            console.log(filters);
+            // console.log(filters);
             this.updateStorage()
         }
         else{
             todo.state = false
-            console.log(todo);
-            console.log(todos);
-            console.log(filters);
+            // console.log(todo);
+            // console.log(todos);
+            // console.log(filters);
             filters.forEach(todo => {
                 if (todo.state === false && isTous === true) {
                     this.remove()
@@ -432,6 +433,23 @@ export class TaskList extends HTMLElement {
     updateStorage(){
         localStorage.setItem('todos', JSON.stringify(todos))
     }
+    dateEcheance(element, todo){
+        const maDate = new Date();
+        // Obtenir les composants de la date
+        const annee = maDate.getFullYear();
+        const mois = String(maDate.getMonth() + 1).padStart(2, '0');
+         // Les mois sont indexés de 0 à 11
+        let jour 
+        if (element.innerHTML === "Aujourd'hui") {
+            jour = String(maDate.getDate()).padStart(2, '0');
+        }else if (element.innerHTML === "Demain") {
+            jour = String(maDate.getDate() + 1).padStart(2, '0');
+        }
+        // Construire la chaîne de date au format 'YYYY-MM-DD'
+        const dateFormatee = `${annee}-${mois}-${jour}`;
 
+        // console.log(dateFormatee);
+        todo.dateEcheance = dateFormatee
+    }
 }
 customElements.define('task-list', TaskList)

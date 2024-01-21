@@ -20,8 +20,8 @@ const localStorageFunction = (todos) => {
     let todosInStorage = localStorage.getItem('todos')?.toString()
     if (todosInStorage) {
         todos = JSON.parse(todosInStorage)
-        console.log(todos);  
-        console.log(todosInStorage);
+        // console.log(todos);  
+        // console.log(todosInStorage);
         updateCheckbox(todos)       
         let filter = todos.filter(todo => {
             return todo.state === true

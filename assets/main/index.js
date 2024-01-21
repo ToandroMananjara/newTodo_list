@@ -10,13 +10,13 @@ todos = localStorageFunction(todos)
 document.getElementById('tous').addEventListener('click', () => {
     isTous = false
     updateCheckbox(todos)
-    console.log(todos);
+    // console.log(todos);
 }) 
 tousCount(todos)
 document.getElementById('a-faire').addEventListener('click', () => {
     isTous = true
     taskList.innerHTML = ''
-    console.log(todos);
+    // console.log(todos);
     todos.forEach(todo => {
         if(todo.state === false){
             taskList.append(new TaskList(todo));
@@ -27,7 +27,7 @@ aFaireCount(todos)
 document.getElementById('task-finished').addEventListener('click', () => {
     isTous = true
     taskList.innerHTML = ''
-    console.log(todos);
+    // console.log(todos);
     filters.forEach(todo => {
         taskList.append(new TaskList(todo));
         document.querySelectorAll('.state').forEach(chekbox => {
@@ -42,12 +42,12 @@ links.forEach((link ,index)=>{
         links.forEach(otherLink => {
             otherLink.style.background = '#F6F4F3' // Réinitialiser à la couleur par défaut (ou utilisez une autre valeur)
             otherLink.style.color = '#333333' 
-            console.log(otherLink);
+            // console.log(otherLink);
         })
         console.log(links[index]);
         links[index].style.background = '#007BFF'
         links[index].style.color = ' #f5f5f5'  
     })
 })                                                                                        
-console.log(document.querySelectorAll('.more'));
-console.log(todos);
+
+// console.log(todos);

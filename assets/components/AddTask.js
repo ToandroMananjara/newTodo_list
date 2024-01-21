@@ -86,7 +86,7 @@ export class AddTask extends HTMLElement {
         const taskInput = newTaskInput.value.trim()
         if (taskInput !== '' ) {
             let todo = {
-                id : `${(new Date).getHours()}-${(new Date).getMinutes()}-${(new Date).getSeconds()}`,
+                id : (new Date()).getTime(),
                 title : `${this.title}`,
                 state : false ,
                 isMore : false,  
