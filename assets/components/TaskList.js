@@ -175,6 +175,9 @@ export class TaskList extends HTMLElement {
             .note{
                 margin-right: 10px;
             }
+            textarea{
+                padding: 10px;
+            }
             .echeance {
                 display: flex;
                 flex-direction: column;
@@ -280,6 +283,10 @@ export class TaskList extends HTMLElement {
                     gap: 5px;
                 }
             }
+            
+            select:hover{
+                cursor: pointer;
+            }
             .priorite-color{
                 position: absolute;
                 left:0;
@@ -288,6 +295,7 @@ export class TaskList extends HTMLElement {
                 width: 10px;
                 height: 100%;
             }
+        
         </style>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
             <div class="priorite-color"></div>
