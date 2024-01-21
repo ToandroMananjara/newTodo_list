@@ -69,6 +69,7 @@ export class TaskList extends HTMLElement {
 
         this.querySelector('#getDate').addEventListener('change', ()=>{
             this.todo.dateEcheance = this.querySelector('#getDate').value
+            this.querySelector('#getDate').value = ''
             this.querySelector('.date-echeance').innerHTML = this.todo.dateEcheance
             this.updateStorage()
         })
