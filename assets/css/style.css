@@ -95,7 +95,7 @@ ul{
     cursor: pointer;
 }
 task-list{
-
+    position: relative;
     width: 90%;
     /* height: 30px; */
     min-height: 30px;

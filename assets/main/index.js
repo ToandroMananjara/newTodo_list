@@ -50,3 +50,4 @@ links.forEach((link ,index)=>{
     })
 })                                                                                        
 console.log(document.querySelectorAll('.more'));
+console.log(todos);

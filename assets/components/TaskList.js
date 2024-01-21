@@ -11,22 +11,30 @@ export class TaskList extends HTMLElement {
         this.todo = todo
         this.isMore = false
         this.render()
+
+        this.querySelector('#notes').innerHTML = this.todo.note
+        this.querySelector('#priorite').value = this.todo.priorite  
+
+        this.prioriteColor(this.todo.priorite, this.querySelector('.priorite-color'))
+
         this.querySelector('.delete').addEventListener('click',()=>{
             this.removeTask(this.todo)
         })
+
         this.querySelector('#edit-task').addEventListener('click',() =>
             this.editTask(this.todo)
         )
+
         this.querySelector('.state').addEventListener('click',() =>{
             this.stateTask(this.querySelector('.state'), this.todo)
             aFaireCount(todos)
             taskFinished()
         })
+
         this.querySelector('.item-container').addEventListener('click', ()=>{
             document.querySelectorAll('.more').forEach(more =>{
                 more.style.display = 'none'
             })
-    
             if(this.todo.isMore === false){
                 todos.forEach((todo, index)=>{
                     todo.isMore = false
@@ -39,15 +47,16 @@ export class TaskList extends HTMLElement {
                 this.querySelector('.more').style.display = 'none'
             }        
         })
+
         this.querySelector('.state').addEventListener('click', (event)=>{
             event.stopPropagation()
         })
-        this.querySelector('#notes').innerHTML = this.todo.note
+        
         this.querySelector('#notes').addEventListener('change', ()=>{
             this.todo.note =  this.querySelector('#notes').value
             this.updateStorage()
         })
-        // this.querySelector('.delete').ininnerHTML = this.todo.dateEcheance
+        
         this.querySelectorAll('.getDate').forEach(elt =>{
             elt.addEventListener('click', ()=>{
                 this.todo.dateEcheance = elt.innerHTML
@@ -55,9 +64,33 @@ export class TaskList extends HTMLElement {
                 this.updateStorage()
             })
         })
+
         this.querySelector('#getDate').addEventListener('change', ()=>{
             this.todo.dateEcheance = this.querySelector('#getDate').value
             this.querySelector('.date-echeance').innerHTML = this.todo.dateEcheance
+            this.updateStorage()
+        })
+        
+        this.querySelector('#priorite').addEventListener('click',(event)=>{
+            event.stopPropagation()
+            switch (this.querySelector('#priorite').value) {
+                case 'aucun':
+                    this.querySelector('.priorite-color').style.background = '#fff'
+                    break;
+                case 'basse':
+                    this.querySelector('.priorite-color').style.background = 'orange'
+                    break;
+                case 'moyenne':
+                    this.querySelector('.priorite-color').style.background = 'blue'
+                    break;
+                case 'haute':
+                    this.querySelector('.priorite-color').style.background = 'red'
+                break;                    
+                default:
+                    break;
+            }
+            this.todo.priorite = this.querySelector('#priorite').value
+            console.log(todos);
             this.updateStorage()
         })
     }
@@ -222,34 +255,43 @@ export class TaskList extends HTMLElement {
                 width: fit-content;
             }
             @media only screen and (max-width:1023px){
-             .more{
-                flex-direction:column;
-             }
-             .button{
-                margin-top:20px;
-                position: relative;
-                justify-content:center;
-             }
-             #priorite{
-                width: 100%;
-             }
-             textarea{
-                width: 100%;
-             }
-             .date{
-                display: inline-block;
-             }
-             .echeance-item{
-                width: 100%;
-                display: flex;
-                justify-content:start; 
-                align-items: center;
-                gap: 5px;
+                .more{
+                    flex-direction:column;
+                }
+                .button{
+                    margin-top:20px;
+                    position: relative;
+                    justify-content:center;
+                }
+                #priorite{
+                    width: 100%;
+                }
+                textarea{
+                    width: 100%;
+                }
+                .date{
+                    display: inline-block;
+                }
+                .echeance-item{
+                    width: 100%;
+                    display: flex;
+                    justify-content:start; 
+                    align-items: center;
+                    gap: 5px;
+                }
             }
+            .priorite-color{
+                position: absolute;
+                left:0;
+                z-index:3;
+                background: #fff;
+                width: 10px;
+                height: 100%;
             }
         </style>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-           <div class="item-container">
+            <div class="priorite-color"></div>
+            <div class="item-container">
                 <input class = 'state' data-task-id="${this.todo.id}" type ='checkBox' >    
                 <span class = 'title'>${this.todo.title}</span>
                 <span class = 'date-echeance'>${this.todo.dateEcheance}</span>
@@ -272,7 +314,12 @@ export class TaskList extends HTMLElement {
                 
                 <div class="priorite">
                     <span>Priorité</span><br>
-                    <span id="priorite">Choisir priorite</span>
+                    <select name="" id="priorite">
+                        <option value="aucun">Aucun</option>
+                        <option value="basse">Basse</option>
+                        <option value="moyenne">Moyenne</option>
+                        <option value="haute">Haute</option>
+                    </select>
                 </div>
                 <div class="button">
                     <span class="edit-btn" id = 'edit-task'>Editer</span>    
@@ -355,6 +402,24 @@ export class TaskList extends HTMLElement {
         })
         array.splice(indexRemove, 1)
         // console.log(array);
+    }
+    prioriteColor(priorite, priorite_color){
+        switch (priorite) {
+            case 'aucun':
+                priorite_color.style.background = '#fff'
+                break;
+            case 'basse':
+                priorite_color.style.background = 'orange'
+                break;
+            case 'moyenne':
+                priorite_color.style.background = 'blue'
+                break;
+            case 'haute':
+                priorite_color.style.background = 'red'
+            break;                    
+            default:
+                break;
+        }
     }
     updateStorage(){
         localStorage.setItem('todos', JSON.stringify(todos))
